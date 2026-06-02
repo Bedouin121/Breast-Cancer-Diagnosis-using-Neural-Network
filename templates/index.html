@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breast Cancer Diagnosis</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <!-- ── header ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+        <span>BCD Neural Net</span>
+      </div>
+      <p class="header-sub">Breast Cancer Diagnosis · Deep Learning</p>
+    </div>
+  </header>
+
+  <main class="page-main">
+
+    <!-- ── upload card ── -->
+    <section class="card upload-card" id="uploadCard">
+      <h2 class="card-title">Upload Ultrasound Image</h2>
+      <p class="card-desc">
+        Upload a breast ultrasound scan. The model will locate the tumour region
+        and classify it as <strong>Normal</strong>, <strong>Benign</strong> or
+        <strong>Malignant</strong>.
+      </p>
+
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.bmp,.tiff,.tif" hidden />
+        <div class="drop-content" id="dropContent">
+          <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p class="drop-text">Drag &amp; drop an image here, or <span class="drop-link">browse</span></p>
+          <p class="drop-hint">PNG · JPG · BMP · TIFF &nbsp;|&nbsp; max 16 MB</p>
+        </div>
+        <img id="previewImg" class="preview-img hidden" alt="Preview" />
+      </div>
+
+      <div class="upload-actions">
+        <button class="btn btn-secondary" id="clearBtn" disabled>Clear</button>
+        <button class="btn btn-primary" id="analyseBtn" disabled>
+          <span id="btnLabel">Analyse</span>
+          <span id="btnSpinner" class="spinner hidden"></span>
+        </button>
+      </div>
+
+      <div id="errorBanner" class="error-banner hidden"></div>
+    </section>
+
+    <!-- ── results section (hidden until inference runs) ── -->
+    <section class="results-section hidden" id="resultsSection">
+
+      <!-- verdict card -->
+      <div class="card verdict-card" id="verdictCard">
+        <div class="verdict-badge" id="verdictBadge"></div>
+        <div class="verdict-body">
+          <p class="verdict-label">Diagnosis</p>
+          <h2 class="verdict-class" id="verdictClass"></h2>
+          <p class="verdict-confidence" id="verdictConfidence"></p>
+        </div>
+      </div>
+
+      <!-- probability bars -->
+      <div class="card prob-card">
+        <h3 class="card-title">Class Probabilities</h3>
+        <div class="prob-list" id="probList"></div>
+      </div>
+
+      <!-- visualisations -->
+      <div class="vis-grid">
+        <div class="card vis-card">
+          <h3 class="card-title">Original</h3>
+          <img id="originalImg" class="vis-img" alt="Original scan" />
+        </div>
+        <div class="card vis-card">
+          <h3 class="card-title">Segmentation Overlay</h3>
+          <img id="overlayImg" class="vis-img" alt="Tumour segmentation overlay" />
+        </div>
+        <div class="card vis-card">
+          <h3 class="card-title">Probability Heatmap</h3>
+          <img id="heatmapImg" class="vis-img" alt="Tumour probability heatmap" />
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <strong>Disclaimer:</strong> This tool is for educational and research purposes only.
+        It is not a substitute for professional medical diagnosis.
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    Built with a U-Net + classification head trained on breast ultrasound data.
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
